@@ -93,7 +93,7 @@
     </div>
 
     <c:if test="${alert !=null}">
-        <h3 class="alert alertdanger">${alert}</h3>
+        <h3 class="alert alert-danger">${alert}</h3>
     </c:if>
 
     <div class="container">
@@ -113,6 +113,10 @@
         <button type="button" class="cancelbtn">Cancel</button>
         <span class="psw">Forgot <a href="#">password?</a></span>
     </div>
+
+</form>
+<form action="/Exercise_war_exploded/register" method="get">
+    <button type="submit">Register</button>
 </form>
 </body>
 </html>

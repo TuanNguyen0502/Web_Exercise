@@ -3,10 +3,8 @@ package vn.loh.controllers;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
+import org.eclipse.tags.shaded.org.apache.bcel.classfile.Constant;
 import vn.loh.models.UserModel;
 import vn.loh.services.IUserService;
 import vn.loh.services.impl.UserServiceImpl;
@@ -26,6 +24,19 @@ public class LoginController extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/waiting");
             return;
         }
+
+        // Check cookie
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("username")) {
+                    session = req.getSession(true);
+                    session.setAttribute("username", cookie.getValue());
+                    resp.sendRedirect(req.getContextPath() + "/waiting");
+                    return;
+                }
+            }
+        }
         req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
     }
 
@@ -38,6 +49,14 @@ public class LoginController extends HttpServlet {
         // Nhan tham so tu URL
         String username = req.getParameter("username");
         String password = req.getParameter("password");
+        boolean isRememberMe = false;
+        String remember = req.getParameter("remember");
+        if (remember.equals("on")) {
+            isRememberMe = true;
+        }
+        else if (remember == null) {
+            isRememberMe = false;
+        }
         String alertMsg = "";
 
         // Xu ly logic
@@ -47,20 +66,27 @@ public class LoginController extends HttpServlet {
             req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
             return;
         }
+
         IUserService userService = new UserServiceImpl();
         UserModel user = userService.login(username, password);
         if (user != null) {
             HttpSession session = req.getSession(true);
             session.setAttribute("account", user);
-//            if (isRememberMe) {
-//                saveRemeberMe(resp, username);
-//            }
+            if (isRememberMe) {
+                saveRemeberMe(resp, username);
+            }
             resp.sendRedirect(req.getContextPath() + "/waiting");
         } else {
             alertMsg = "Tài khoản hoặc mật khẩu không đúng";
             req.setAttribute("alert", alertMsg);
             req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
         }
+    }
+
+    private void saveRemeberMe(HttpServletResponse response, String username) {
+        Cookie cookie = new Cookie("username", username);
+        cookie.setMaxAge(30 * 60);
+        response.addCookie(cookie);
     }
 }
 

@@ -10,7 +10,7 @@ import vn.loh.models.UserModel;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/waiting", "/cho"})
+@WebServlet(urlPatterns = {"/waiting"})
 public class WaitingController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
