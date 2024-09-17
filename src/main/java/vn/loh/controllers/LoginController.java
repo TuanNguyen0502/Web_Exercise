@@ -50,12 +50,13 @@ public class LoginController extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         boolean isRememberMe = false;
-        String remember = req.getParameter("remember");
-        if (remember.equals("on")) {
-            isRememberMe = true;
-        }
-        else if (remember == null) {
-            isRememberMe = false;
+        String remember = "";
+        // Nếu checkbox không được check khi submit thì name and value của checkbox sẽ không được gửi lên server
+        if (req.getParameter("remember") != null) {
+            remember = req.getParameter("remember");
+            if (remember.equals("on")) {
+                isRememberMe = true;
+            }
         }
         String alertMsg = "";
 
@@ -70,6 +71,7 @@ public class LoginController extends HttpServlet {
         IUserService userService = new UserServiceImpl();
         UserModel user = userService.login(username, password);
         if (user != null) {
+//            Error with session i don't know why
             HttpSession session = req.getSession(true);
             session.setAttribute("account", user);
             if (isRememberMe) {
@@ -85,7 +87,7 @@ public class LoginController extends HttpServlet {
 
     private void saveRemeberMe(HttpServletResponse response, String username) {
         Cookie cookie = new Cookie("username", username);
-        cookie.setMaxAge(30 * 60);
+        cookie.setMaxAge(30);
         response.addCookie(cookie);
     }
 }

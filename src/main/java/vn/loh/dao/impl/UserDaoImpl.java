@@ -159,7 +159,17 @@ public class UserDaoImpl extends DBConnectMySQL implements IUserDao {
     }
 
     public static void main(String[] args) {
+        UserModel user = new UserModel();
+        user.setPhone("123456789");
+        user.setEmail("no");
+        user.setUsername("no");
+        user.setFullname("no");
+        user.setPassword("no");
+        user.setImage("no");
+        user.setRoleid(1);
+        user.setCreatedate(new java.sql.Date(System.currentTimeMillis()));
         IUserDao userDao = new UserDaoImpl();
-        System.out.println(userDao.findByUsername("tuantp2004"));
+        userDao.insert(user);
+
     }
 }

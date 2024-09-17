@@ -51,7 +51,7 @@ public class RegisterController extends HttpServlet {
         IUserService userService = new UserServiceImpl();
         String alertMsg = "";
 
-        // Check exist email and username
+        // Check exist email and username and phone
         if (userService.checkExistEmail(email)) {
             alertMsg = "Email đã tồn tại!";
             req.setAttribute("alertMsg", alertMsg);
@@ -60,6 +60,12 @@ public class RegisterController extends HttpServlet {
         }
         if (userService.checkExistUsername(username)) {
             alertMsg = "Username đã tồn tại!";
+            req.setAttribute("alertMsg", alertMsg);
+            req.getRequestDispatcher(REGISTER).forward(req, resp);
+            return;
+        }
+        if (userService.checkExistPhone(phone)) {
+            alertMsg = "Số điện thoại đã tồn tại!";
             req.setAttribute("alertMsg", alertMsg);
             req.getRequestDispatcher(REGISTER).forward(req, resp);
             return;
