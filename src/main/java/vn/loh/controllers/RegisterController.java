@@ -44,9 +44,11 @@ public class RegisterController extends HttpServlet {
         // Get data from form
         String username = req.getParameter("username");
         String password = req.getParameter("password");
+        String password_repeat = req.getParameter("password-repeat");
         String email = req.getParameter("email");
         String fullname = req.getParameter("fullname");
         String phone = req.getParameter("phone");
+        String image = req.getParameter("image");
 
         IUserService userService = new UserServiceImpl();
         String alertMsg = "";
@@ -70,8 +72,15 @@ public class RegisterController extends HttpServlet {
             req.getRequestDispatcher(REGISTER).forward(req, resp);
             return;
         }
+        // Check password
+        if (!password.equals(password_repeat)) {
+            alertMsg = "Mật khẩu không khớp!";
+            req.setAttribute("alertMsg", alertMsg);
+            req.getRequestDispatcher(REGISTER).forward(req, resp);
+            return;
+        }
 
-        boolean isSuccess = userService.register(username, password, email, fullname, phone);
+        boolean isSuccess = userService.register(username, password, email, fullname, image, phone);
         if (isSuccess) {
             alertMsg = "Đăng ký thành công!";
             req.setAttribute("alertMsg", alertMsg);
