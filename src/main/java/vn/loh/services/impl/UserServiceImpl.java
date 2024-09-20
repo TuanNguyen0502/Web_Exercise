@@ -51,6 +51,11 @@ public class UserServiceImpl implements IUserService {
         return userDao.checkExistPhone(phone);
     }
 
+    @Override
+    public boolean updatePassword(String username, String password) {
+        return userDao.updatePassword(username, password);
+    }
+
     public static void main(String[] args) {
         try {
             IUserService userService = new UserServiceImpl();
