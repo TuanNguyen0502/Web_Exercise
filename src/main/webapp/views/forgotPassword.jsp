@@ -198,7 +198,6 @@
 
             <button type="submit">Reset Password</button>
         </div>
-
     </form>
 
     <div class="footer">

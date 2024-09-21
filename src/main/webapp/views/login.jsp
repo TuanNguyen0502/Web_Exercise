@@ -12,54 +12,137 @@
 <head>
     <title>Title</title>
     <style>
-        /* Bordered form */
-        form {
-            border: 3px solid #f1f1f1;
-        }
-
-        /* Full-width inputs */
-        input[type=text], input[type=password] {
-            width: 100%;
-            padding: 12px 20px;
-            margin: 8px 0;
-            display: inline-block;
-            border: 1px solid #ccc;
+        * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
+            font-family: "segoe ui", verdana, helvetica, arial, sans-serif;
+            font-size: 16px;
+            transition: all 500ms ease;
         }
 
-        /* Set a style for all buttons */
-        button {
-            background-color: #04AA6D;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            cursor: pointer;
-            width: 100%;
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            -moz-font-feature-settings: "liga" on;
         }
 
-        /* Add a hover effect for buttons */
-        button:hover {
-            opacity: 0.8;
-        }
-
-        /* Extra style for the cancel button (red) */
-        .cancelbtn {
-            width: auto;
-            padding: 10px 18px;
-            background-color: #f44336;
-        }
-
-        /* Center the avatar image inside this container */
-        .imgcontainer {
+        .row {
+            background-color: rgba(20, 120, 200, 0.6);
+            color: #fff;
             text-align: center;
-            margin: 24px 0 12px 0;
+            padding: 2em 2em 0.5em;
+            width: 90%;
+            margin: 2em auto;
+            border-radius: 5px;
         }
 
-        /* Avatar image */
-        img.avatar {
-            width: 40%;
-            border-radius: 50%;
+        .row h1 {
+            font-size: 2.5em;
+        }
+
+        .row .form-group {
+            margin: 0.5em 0;
+        }
+
+        .row .form-group label {
+            display: block;
+            color: #fff;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .row .form-group input, .row .form-group button {
+            display: block;
+            padding: 0.5em 0;
+            width: 100%;
+            margin-top: 1em;
+            margin-bottom: 0.5em;
+            background-color: inherit;
+            border: none;
+            border-bottom: 1px solid #555;
+            color: #eee;
+        }
+
+        .row .form-group input:focus, .row .form-group button:focus {
+            background-color: #fff;
+            color: #000;
+            border: none;
+            padding: 1em 0.5em;
+            animation: pulse 1s infinite ease;
+        }
+
+        .row .form-group button {
+            border: 1px solid #fff;
+            border-radius: 5px;
+            outline: none;
+            -moz-user-select: none;
+            user-select: none;
+            color: #333;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 2em;
+            padding: 1em;
+        }
+
+        .row .form-group button:hover, .row .form-group button:focus {
+            background-color: #fff;
+        }
+
+        .row .form-group button.is-loading::after {
+            animation: spinner 500ms infinite linear;
+            content: "";
+            position: absolute;
+            margin-left: 2em;
+            border: 2px solid #000;
+            border-radius: 100%;
+            border-right-color: transparent;
+            border-left-color: transparent;
+            height: 1em;
+            width: 4%;
+        }
+
+        .row .footer h5 {
+            margin-top: 1em;
+        }
+
+        .row .footer p {
+            margin-top: 2em;
+        }
+
+        .row .footer p .symbols {
+            color: #444;
+        }
+
+        .row .footer a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .information-text {
+            color: #ddd;
+        }
+
+        @media screen and (max-width: 320px) {
+            .row {
+                padding-left: 1em;
+                padding-right: 1em;
+            }
+
+            .row h1 {
+                font-size: 1.5em !important;
+            }
+        }
+
+        @media screen and (min-width: 900px) {
+            .row {
+                width: 50%;
+            }
+        }
+
+        * {
+            box-sizing: border-box
         }
 
         /* Add padding to containers */
@@ -67,56 +150,60 @@
             padding: 16px;
         }
 
-        /* The "Forgot password" text */
-        span.psw {
-            float: right;
-            padding-top: 16px;
+        /* Full-width input fields */
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
         }
 
-        /* Change styles for span and cancel button on extra small screens */
-        @media screen and (max-width: 300px) {
-            span.psw {
-                display: block;
-                float: none;
-            }
+        input[type=text]:focus, input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
 
-            .cancelbtn {
-                width: 100%;
-            }
+        /* Overwrite default styles of hr */
+        hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 25px;
         }
     </style>
 </head>
 <body>
-<form action="/Exercise_war_exploded/login" method="post">
-    <div class="imgcontainer">
-        <img src="img_avatar2.png" alt="Avatar" class="avatar">
-    </div>
+<div class="row">
+    <h1>Login</h1>
 
-    <c:if test="${alert !=null}">
-        <h3 class="alert alert-danger">${alert}</h3>
-    </c:if>
+    <form class="form-group" action="/Exercise_war_exploded/login" method="post">
+        <c:if test="${alert !=null}">
+            <h3 class="alert alert-danger">${alert}</h3>
+        </c:if>
 
-    <div class="container">
-        <label for="uname"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="username" required>
+        <div class="container">
+            <label for="username"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="username" id="username" required>
 
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="password" required>
+            <label for="password"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="password" id="password" required>
 
-        <button type="submit">Login</button>
+            <button type="submit">Login</button>
+        </div>
+    </form>
+
+    <div class="footer">
         <label>
             <input type="checkbox" name="remember"> Remember me
         </label>
+        <h5>Forgot your password? <a href="/Exercise_war_exploded/forgot-password">Reset Password.</a></h5>
+        <h5>New here? <a href="/Exercise_war_exploded/register">Sign Up.</a></h5>
+        <p class="information-text"><span class="symbols" title="Lots of love from me to YOU!">&hearts; </span>
+            <a href="https://www.facebook.com/adedokunyinka.enoch" target="_blank" title="Connect with me on Facebook">
+                Yinka Enoch Adedokun
+            </a>
+        </p>
     </div>
-
-    <div class="container" style="background-color:#f1f1f1">
-        <button type="button" class="cancelbtn">Cancel</button>
-        <span class="psw">Forgot <a href="/Exercise_war_exploded/forgot-password">password?</a></span>
-    </div>
-
-</form>
-<form action="/Exercise_war_exploded/register" method="get">
-    <button type="submit">Register</button>
-</form>
+</div>
 </body>
 </html>
