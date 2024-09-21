@@ -20,5 +20,8 @@
     <h1>Manager Home</h1>
     <c:if test="${message==false}"> Login fail</c:if>
     <c:if test="${message==true}"> Hello ${username}</c:if>
+    <li>
+        <a href="${pageContext.request.contextPath }/logout">Đăng Xuất</a>
+    </li>
 </body>
 </html>
