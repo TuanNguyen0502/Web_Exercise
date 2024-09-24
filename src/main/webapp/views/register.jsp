@@ -7,209 +7,98 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<html>
-<head>
-    <title>Register</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "segoe ui", verdana, helvetica, arial, sans-serif;
-            font-size: 16px;
-            transition: all 500ms ease;
-        }
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
-        body {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
-            -moz-font-feature-settings: "liga" on;
-        }
+<!-- BEGIN CONTENT -->
+<div class="col-md-9 col-sm-9">
+    <h1>Create an account</h1>
+    <div class="content-form-page">
+        <div class="row">
+            <div class="col-md-7 col-sm-7">
+                <c:if test="${alertMsg !=null}">
+                    <h3 class="alert alert-danger">${alertMsg}</h3>
+                </c:if>
 
-        .row {
-            background-color: rgba(20, 120, 200, 0.6);
-            color: #fff;
-            text-align: center;
-            padding: 2em 2em 0.5em;
-            width: 90%;
-            margin: 2em auto;
-            border-radius: 5px;
-        }
+                <form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/register"
+                      method="post">
+                    <fieldset>
+                        <legend>Your personal details</legend>
+                        <div class="form-group">
+                            <label for=username class="col-lg-4 control-label">Username <span
+                                    class="require">*</span></label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="username" name="username">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fullname" class="col-lg-4 control-label">Full Name <span
+                                    class="require">*</span></label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="fullname" name="fullname" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for=email class="col-lg-4 control-label">Email <span
+                                    class="require">*</span></label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="email" name="email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for=phone class="col-lg-4 control-label">Phone number <span
+                                    class="require">*</span></label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="phone" name="phone" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for=image class="col-lg-4 control-label">Image's URL <span
+                                    class="require">*</span></label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="image" name="image" required>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Your password</legend>
+                        <div class="form-group">
+                            <label for="password" class="col-lg-4 control-label">Password <span class="require">*</span></label>
+                            <div class="col-lg-8">
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password-repeat" class="col-lg-4 control-label">Confirm password <span
+                                    class="require">*</span></label>
+                            <div class="col-lg-8">
+                                <input type="password" class="form-control" id="password-repeat" name="password-repeat"
+                                       required>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="row">
+                        <div class="col-lg-8 col-md-offset-4 padding-left-0 padding-top-20">
+                            <button type="submit" class="btn btn-primary">Create an account</button>
+                            <button type="button" class="btn btn-default">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4 col-sm-4 pull-right">
+                <div class="form-info">
+                    <h2><em>Important</em> Information</h2>
+                    <p>Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed sit nonumy nibh sed euismod ut laoreet
+                        dolore magna aliquarm erat sit volutpat. Nostrud exerci tation ullamcorper suscipit lobortis
+                        nisl aliquip commodo quat.</p>
 
-        .row h1 {
-            font-size: 2.5em;
-        }
+                    <p>Duis autem vel eum iriure at dolor vulputate velit esse vel molestie at dolore.</p>
 
-        .row .form-group {
-            margin: 0.5em 0;
-        }
-
-        .row .form-group label {
-            display: block;
-            color: #fff;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        .row .form-group input, .row .form-group button {
-            display: block;
-            padding: 0.5em 0;
-            width: 100%;
-            margin-top: 1em;
-            margin-bottom: 0.5em;
-            background-color: inherit;
-            border: none;
-            border-bottom: 1px solid #555;
-            color: #eee;
-        }
-
-        .row .form-group input:focus, .row .form-group button:focus {
-            background-color: #fff;
-            color: #000;
-            border: none;
-            padding: 1em 0.5em;
-            animation: pulse 1s infinite ease;
-        }
-
-        .row .form-group button {
-            border: 1px solid #fff;
-            border-radius: 5px;
-            outline: none;
-            -moz-user-select: none;
-            user-select: none;
-            color: #333;
-            font-weight: 800;
-            cursor: pointer;
-            margin-top: 2em;
-            padding: 1em;
-        }
-
-        .row .form-group button:hover, .row .form-group button:focus {
-            background-color: #fff;
-        }
-
-        .row .form-group button.is-loading::after {
-            animation: spinner 500ms infinite linear;
-            content: "";
-            position: absolute;
-            margin-left: 2em;
-            border: 2px solid #000;
-            border-radius: 100%;
-            border-right-color: transparent;
-            border-left-color: transparent;
-            height: 1em;
-            width: 4%;
-        }
-
-        .row .footer h5 {
-            margin-top: 1em;
-        }
-
-        .row .footer p {
-            margin-top: 2em;
-        }
-
-        .row .footer p .symbols {
-            color: #444;
-        }
-
-        .row .footer a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        .information-text {
-            color: #ddd;
-        }
-
-        @media screen and (max-width: 320px) {
-            .row {
-                padding-left: 1em;
-                padding-right: 1em;
-            }
-
-            .row h1 {
-                font-size: 1.5em !important;
-            }
-        }
-
-        @media screen and (min-width: 900px) {
-            .row {
-                width: 50%;
-            }
-        }
-
-        * {
-            box-sizing: border-box
-        }
-
-        /* Add padding to containers */
-        .container {
-            padding: 16px;
-        }
-
-        /* Full-width input fields */
-        input[type=text], input[type=password] {
-            width: 100%;
-            padding: 15px;
-            margin: 5px 0 22px 0;
-            display: inline-block;
-            border: none;
-            background: #f1f1f1;
-        }
-
-        input[type=text]:focus, input[type=password]:focus {
-            background-color: #ddd;
-            outline: none;
-        }
-
-        /* Overwrite default styles of hr */
-        hr {
-            border: 1px solid #f1f1f1;
-            margin-bottom: 25px;
-        }
-    </style>
-</head>
-<body>
-<div class="row">
-    <form class="form-group" action="/Exercise_war_exploded/register" method="post">
-        <c:if test="${alertMsg !=null}">
-        <h3 class="alert alert-danger">${alertMsg}</h3>
-        </c:if>
-
-        <div class="container">
-            <h1>Register</h1>
-            <p>Please fill in this form to create an account.</p>
-
-            <label for="email"><b>Email</b></label>
-            <input type="text" placeholder="Enter Email" name="email" id="email" required>
-
-            <label for="username"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="username" id="username" required>
-
-            <label for="password"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" id="password" required>
-
-            <label for="password-repeat"><b>Repeat Password</b></label>
-            <input type="password" placeholder="Repeat Password" name="password-repeat" id="password-repeat" required>
-
-            <label for="fullname"><b>Full name</b></label>
-            <input type="text" placeholder="Enter Full name" name="fullname" id="fullname" required>
-
-            <label for="phone"><b>Phone number</b></label>
-            <input type="text" placeholder="Enter Phone number" name="phone" id="phone" required>
-
-            <label for="image"><b>Image</b></label>
-            <input type="text" placeholder="Enter Image's url" name="image" id="image" required>
-
-            <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
-            <button type="submit" class="registerbtn">Register</button>
+                    <button type="button" class="btn btn-default">More details</button>
+                </div>
+            </div>
         </div>
-
-        <div class="container signin">
-            <p>Already have an account? <a href="/Exercise_war_exploded/login">Sign in</a>.</p>
-        </div>
+    </div>
 </div>
-</body>
-</html>
+<!-- END CONTENT -->
+
+

@@ -8,202 +8,73 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
-<html>
-<head>
-    <title>Title</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "segoe ui", verdana, helvetica, arial, sans-serif;
-            font-size: 16px;
-            transition: all 500ms ease;
-        }
 
-        body {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
-            -moz-font-feature-settings: "liga" on;
-        }
-
-        .row {
-            background-color: rgba(20, 120, 200, 0.6);
-            color: #fff;
-            text-align: center;
-            padding: 2em 2em 0.5em;
-            width: 90%;
-            margin: 2em auto;
-            border-radius: 5px;
-        }
-
-        .row h1 {
-            font-size: 2.5em;
-        }
-
-        .row .form-group {
-            margin: 0.5em 0;
-        }
-
-        .row .form-group label {
-            display: block;
-            color: #fff;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        .row .form-group input, .row .form-group button {
-            display: block;
-            padding: 0.5em 0;
-            width: 100%;
-            margin-top: 1em;
-            margin-bottom: 0.5em;
-            background-color: inherit;
-            border: none;
-            border-bottom: 1px solid #555;
-            color: #eee;
-        }
-
-        .row .form-group input:focus, .row .form-group button:focus {
-            background-color: #fff;
-            color: #000;
-            border: none;
-            padding: 1em 0.5em;
-            animation: pulse 1s infinite ease;
-        }
-
-        .row .form-group button {
-            border: 1px solid #fff;
-            border-radius: 5px;
-            outline: none;
-            -moz-user-select: none;
-            user-select: none;
-            color: #333;
-            font-weight: 800;
-            cursor: pointer;
-            margin-top: 2em;
-            padding: 1em;
-        }
-
-        .row .form-group button:hover, .row .form-group button:focus {
-            background-color: #fff;
-        }
-
-        .row .form-group button.is-loading::after {
-            animation: spinner 500ms infinite linear;
-            content: "";
-            position: absolute;
-            margin-left: 2em;
-            border: 2px solid #000;
-            border-radius: 100%;
-            border-right-color: transparent;
-            border-left-color: transparent;
-            height: 1em;
-            width: 4%;
-        }
-
-        .row .footer h5 {
-            margin-top: 1em;
-        }
-
-        .row .footer p {
-            margin-top: 2em;
-        }
-
-        .row .footer p .symbols {
-            color: #444;
-        }
-
-        .row .footer a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        .information-text {
-            color: #ddd;
-        }
-
-        @media screen and (max-width: 320px) {
-            .row {
-                padding-left: 1em;
-                padding-right: 1em;
-            }
-
-            .row h1 {
-                font-size: 1.5em !important;
-            }
-        }
-
-        @media screen and (min-width: 900px) {
-            .row {
-                width: 50%;
-            }
-        }
-
-        * {
-            box-sizing: border-box
-        }
-
-        /* Add padding to containers */
-        .container {
-            padding: 16px;
-        }
-
-        /* Full-width input fields */
-        input[type=text], input[type=password] {
-            width: 100%;
-            padding: 15px;
-            margin: 5px 0 22px 0;
-            display: inline-block;
-            border: none;
-            background: #f1f1f1;
-        }
-
-        input[type=text]:focus, input[type=password]:focus {
-            background-color: #ddd;
-            outline: none;
-        }
-
-        /* Overwrite default styles of hr */
-        hr {
-            border: 1px solid #f1f1f1;
-            margin-bottom: 25px;
-        }
-    </style>
-</head>
-<body>
-<div class="row">
+<!-- BEGIN CONTENT -->
+<div class="col-md-9 col-sm-9">
     <h1>Login</h1>
+    <div class="content-form-page">
+        <div class="row">
+            <div class="col-md-10 col-sm-10">
+                <c:if test="${alert !=null}">
+                    <h3 class="alert alert-danger">${alert}</h3>
+                </c:if>
 
-    <form class="form-group" action="/Exercise_war_exploded/login" method="post">
-        <c:if test="${alert !=null}">
-            <h3 class="alert alert-danger">${alert}</h3>
-        </c:if>
+                <form class="form-horizontal form-without-legend" role="form" action="${pageContext.request.contextPath}/login" method="post">
+                    <div class="form-group">
+                        <label for="username" class="col-lg-4 control-label">Username <span class="require">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-lg-4 control-label">Password <span
+                                class="require">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" id="password" name="password" required>
+                            <div>
+                                <input type="checkbox" name="remember"> Remember me
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8 col-md-offset-4 padding-left-0">
+                            <a href="${pageContext.request.contextPath}/forgot-password">Forget Password?</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8 col-md-offset-4 padding-left-0 padding-top-20">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8 col-md-offset-4 padding-left-0 padding-top-10 padding-right-30">
+                            <hr>
+                            <div class="login-socio">
+                                <p class="text-muted">or login using:</p>
+                                <ul class="social-icons">
+                                    <li><a href="#" data-original-title="facebook" class="facebook"
+                                           title="facebook"></a></li>
+                                    <li><a href="#" data-original-title="Twitter" class="twitter" title="Twitter"></a>
+                                    </li>
+                                    <li><a href="#" data-original-title="Google Plus" class="googleplus"
+                                           title="Google Plus"></a></li>
+                                    <li><a href="#" data-original-title="Linkedin" class="linkedin"
+                                           title="LinkedIn"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4 col-sm-4 pull-right">
+                <div class="form-info">
+                    <h2><em>Important</em> Information</h2>
+                    <p>Duis autem vel eum iriure at dolor vulputate velit esse vel molestie at dolore.</p>
 
-        <div class="container">
-            <label for="username"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="username" id="username" required>
-
-            <label for="password"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" id="password" required>
-
-            <button type="submit">Login</button>
+                    <button type="button" class="btn btn-default">More details</button>
+                </div>
+            </div>
         </div>
-    </form>
-
-    <div class="footer">
-        <label>
-            <input type="checkbox" name="remember"> Remember me
-        </label>
-        <h5>Forgot your password? <a href="/Exercise_war_exploded/forgot-password">Reset Password.</a></h5>
-        <h5>New here? <a href="/Exercise_war_exploded/register">Sign Up.</a></h5>
-        <p class="information-text"><span class="symbols" title="Lots of love from me to YOU!">&hearts; </span>
-            <a href="https://www.facebook.com/adedokunyinka.enoch" target="_blank" title="Connect with me on Facebook">
-                Yinka Enoch Adedokun
-            </a>
-        </p>
     </div>
 </div>
-</body>
-</html>
+<!-- END CONTENT -->

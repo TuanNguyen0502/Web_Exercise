@@ -8,7 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
-<c:redirect url="/login"></c:redirect>
+
+<c:redirect url="/home"></c:redirect>
+
 <html>
 <head>
     <title>Title</title>
