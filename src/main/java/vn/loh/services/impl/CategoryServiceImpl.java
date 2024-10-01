@@ -8,7 +8,7 @@ import vn.loh.services.ICategoryService;
 import java.util.List;
 
 public class CategoryServiceImpl implements ICategoryService {
-    ICategoryDao categoryDao = new CategoryDaoImpl();
+    private ICategoryDao categoryDao = new CategoryDaoImpl();
 
     @Override
     public List<CategoryModel> findAll() {
@@ -22,7 +22,10 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public void insert(CategoryModel category) {
-        categoryDao.insert(category);
+        CategoryModel categoryModel = categoryDao.findByName(category.getName());
+        if (categoryModel == null) {
+            categoryDao.insert(category);
+        }
     }
 
     @Override
@@ -42,7 +45,13 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public List<CategoryModel> findByName(String name) {
-        return categoryDao.findByName(name);
+    public CategoryModel findByName(String name) { return categoryDao.findByName(name);}
+
+    @Override
+    public void updateStatus(int id, int status) {
+        CategoryModel categoryModel = categoryDao.findByID(id);
+        if (categoryModel != null) {
+            categoryDao.updateStatus(id, status);
+        }
     }
 }

@@ -12,7 +12,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import org.apache.commons.io.IOUtils;
 
-@WebServlet(urlPatterns = {"/download"})
+@WebServlet(urlPatterns = {"/downloadFile"})
 public class DownloadFileController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

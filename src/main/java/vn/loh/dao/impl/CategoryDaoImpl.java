@@ -30,18 +30,12 @@ public class CategoryDaoImpl extends DBConnectMySQL implements ICategoryDao {
             resultSet = preparedStatement.executeQuery();
             // get data
             while (resultSet.next()) {
-                CategoryModel categoryModel = new CategoryModel();
-                categoryModel.setId(resultSet.getInt("id"));
-                categoryModel.setName(resultSet.getString("name"));
-                categoryModel.setImage(resultSet.getString("image"));
-                categoryModel.setStatus(resultSet.getInt("status"));
-                categories.add(categoryModel);
-//                categories.add(new CategoryModel(
-//                        resultSet.getInt("id"),
-//                        resultSet.getString("name"),
-//                        resultSet.getString("image"),
-//                        resultSet.getInt("status")
-//                ));
+                categories.add(new CategoryModel(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("image"),
+                        resultSet.getInt("status")
+                ));
             }
             // close connection
             connection.close();
@@ -153,36 +147,55 @@ public class CategoryDaoImpl extends DBConnectMySQL implements ICategoryDao {
     }
 
     @Override
-    public List<CategoryModel> findByName(String name) {
-        List<CategoryModel> categories = new ArrayList<>();
-        String sql = "Select * from categories where name like ?";
+    public CategoryModel findByName(String name) {
+        String sql = "Select * from categories where name = ?";
 
         try {
             // get connection
             connection = getDatabaseConnection();
             // prepare statement
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, "%" + name + "%");
+            preparedStatement.setString(1, name);
             // execute query
             resultSet = preparedStatement.executeQuery();
             // get data
             while (resultSet.next()) {
-                categories.add(new CategoryModel(
+                CategoryModel category = new CategoryModel(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
                         resultSet.getString("image"),
                         resultSet.getInt("status")
-                ));
+                );
+                return category;
             }
             // close connection
             connection.close();
             preparedStatement.close();
             resultSet.close();
-
-            return categories;
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public void updateStatus(int id, int status) {
+        String sql = "Update categories set status = ? where id = ?";
+
+        try {
+            // get connection
+            connection = getDatabaseConnection();
+            // prepare statement
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, status);
+            preparedStatement.setInt(2, id);
+            // execute query
+            preparedStatement.executeUpdate();
+            // close connection
+            connection.close();
+            preparedStatement.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

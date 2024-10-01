@@ -17,7 +17,6 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Admin Home</h1>
 <c:choose>
     <c:when test="${sessionScope.account == null}">
         <div class="col-sm-6">

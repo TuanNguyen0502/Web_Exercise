@@ -10,5 +10,6 @@ public interface ICategoryService {
     void insert(CategoryModel category);
     void update(CategoryModel category);
     void delete(int id);
-    List<CategoryModel> findByName(String name);
+    CategoryModel findByName(String name);
+    void updateStatus(int id, int status);
 }

@@ -71,7 +71,6 @@ public class LoginController extends HttpServlet {
         IUserService userService = new UserServiceImpl();
         UserModel user = userService.login(username, password);
         if (user != null) {
-//            Error with session i don't know why
             HttpSession session = req.getSession(true);
             session.setAttribute("account", user);
             if (isRememberMe) {
