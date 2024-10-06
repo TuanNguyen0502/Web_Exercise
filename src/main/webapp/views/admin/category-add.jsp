@@ -15,7 +15,7 @@
     <label for="image">Link Image:</label><br>
     <input type="text" id="image" name="image"><br><br>
     <label for="imageUpload">Upload Image:</label><br>
-    <input type="file" id="imageUpload" name="imageUpload"><br><br>
+    <input type="file" onchange="chooseFile(this)" id="imageUpload" name="imageUpload"><br><br>
 
     <p>Status:</p>
     <input type="radio" id="statuson" name="status" value="1" checked>

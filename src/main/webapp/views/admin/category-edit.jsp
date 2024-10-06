@@ -25,7 +25,7 @@
     <input type="text" id="image" name="image" value="${category.image}"><br><br>
     <label for="imageUpload">Upload Image:</label><br>
     <img height="150" width="200" src="${imgUrl}"/>
-    <input type="file" id="imageUpload" name="imageUpload" value="${category.image}"><br><br>
+    <input type="file" onchange="chooseFile(this)" id="imageUpload" name="imageUpload" value="${category.image}"><br><br>
 
     <label for="statuson">Status:</label><br>
     <input type="radio" id="statuson" name="status" value="1" ${category.status==1 ? 'checked' : ''}>

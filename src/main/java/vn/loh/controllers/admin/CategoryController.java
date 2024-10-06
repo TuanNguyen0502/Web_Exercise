@@ -13,7 +13,10 @@ import vn.loh.services.impl.CategoryServiceImpl;
 import vn.loh.ultils.Constant;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -104,9 +107,6 @@ public class CategoryController extends HttpServlet {
                 int index = fileName.lastIndexOf("."); // index of extend file .jpg, .png, .jpeg
                 String ext = fileName.substring(index + 1); // extend file .jpg, .png, .jpeg
                 fname = System.currentTimeMillis() + "." + ext;
-                // Delete old image file on device
-                File file = new File(uploadPath + "/" + oldImage);
-                if (file.exists()) file.delete();
                 // Write file path
                 filePart.write(uploadPath + "/" + fname);
             } else if (!req.getParameter("image").isEmpty()) {
@@ -115,6 +115,9 @@ public class CategoryController extends HttpServlet {
             } else {
                 fname = oldImage;
             }
+            // Delete old image file on device
+            File file = new File(uploadPath + "/" + oldImage);
+            if (file.exists()) file.deleteOnExit();
         } catch (Exception e) {
             e.printStackTrace();
         }
